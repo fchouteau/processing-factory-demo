@@ -1,0 +1,5 @@
+pesto-cli
+streamlit
+jsonschema
+rasterio
+numpy

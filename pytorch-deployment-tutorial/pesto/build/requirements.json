@@ -1,0 +1,16 @@
+{
+  "environments": {
+    "TORCH_HOME": "/opt/torch/"
+  },
+  "requirements": {
+    "checkpoints": {
+      "from": "file:///home/fchouteau/repositories/processing-factory-demo/pytorch-deployment-tutorial/assets/checkpoints.tar.gz",
+      "to": "/opt/torch/checkpoints/"
+    },
+    "classes": {
+      "from": "file:///home/fchouteau/repositories/processing-factory-demo/pytorch-deployment-tutorial/assets/classes.tar.gz",
+      "to": "/etc/assets/"
+    }
+  },
+  "dockerBaseImage": "python:3.7-stretch"
+}

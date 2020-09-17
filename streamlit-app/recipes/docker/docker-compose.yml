@@ -1,0 +1,12 @@
+version: '3'
+services:
+  streamlit:
+    image: "streamlit-pesto:1.0.0"
+    ports:
+      - "8501:8501"
+    hostname: streamlit
+  pesto:
+    image: "pytorch-deployment-tutorial:1.0.0.dev0"
+    ports:
+      - "4000:8080"
+    hostname: pesto

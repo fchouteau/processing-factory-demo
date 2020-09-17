@@ -1,0 +1,229 @@
+{
+  "email": "computervision@airbus.com",
+  "resources": {
+    "cpu": 4,
+    "gpu": 0,
+    "ram": 8
+  },
+  "name": "pytorch-deployment-tutorial",
+  "organization": "Computer Vision",
+  "version": "1.0.0.dev0",
+  "family": "classification",
+  "title": "pytorch-deployment-tutorial",
+  "description": "My first deployment with pesto",
+  "asynchronous": false,
+  "template": "image-classification",
+  "config": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "description": "Geo Process API config Schema for Deployment Tutorial",
+    "patternProperties": {
+      "^.*$": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "title": "tile-object-detection-config",
+    "type": "object"
+  },
+  "keywords": [
+    "classification",
+    "resnet",
+    "imagenet"
+  ],
+  "input": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "",
+    "type": "object",
+    "description": "Expected format",
+    "definition": {},
+    "definitions": {
+      "Image": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "description": "Image to process : it can be an url or the raw bytes encoded in base64",
+        "type": "string"
+      },
+      "Images": {
+        "items": {
+          "$ref": "#/definitions/Image"
+        },
+        "type": "array"
+      },
+      "Metadata": {
+        "type": "object"
+      },
+      "Metadatas": {
+        "items": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "type": "array"
+      },
+      "Polygon": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "description": "GeoJSON Polygon",
+        "properties": {
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "type": "array"
+          },
+          "coordinates": {
+            "items": {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "minItems": 4,
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "type": {
+            "enum": [
+              "Polygon"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "title": "Polygon",
+        "type": "object"
+      },
+      "Polygons": {
+        "items": {
+          "$ref": "#/definitions/Polygon"
+        },
+        "type": "array"
+      }
+    },
+    "properties": {
+      "image": {
+        "$ref": "#/definitions/Image",
+        "description": "Image related to any imagenet class"
+      }
+    },
+    "required": [
+      "image"
+    ]
+  },
+  "output": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "",
+    "type": "object",
+    "description": "Expected format",
+    "definition": {},
+    "definitions": {
+      "Image": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "description": "Image to process : it can be an url or the raw bytes encoded in base64",
+        "type": "string"
+      },
+      "Images": {
+        "items": {
+          "$ref": "#/definitions/Image"
+        },
+        "type": "array"
+      },
+      "Metadata": {
+        "type": "object"
+      },
+      "Metadatas": {
+        "items": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "type": "array"
+      },
+      "Polygon": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "description": "GeoJSON Polygon",
+        "properties": {
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "type": "array"
+          },
+          "coordinates": {
+            "items": {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "minItems": 4,
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "type": {
+            "enum": [
+              "Polygon"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "title": "Polygon",
+        "type": "object"
+      },
+      "Polygons": {
+        "items": {
+          "$ref": "#/definitions/Polygon"
+        },
+        "type": "array"
+      }
+    },
+    "properties": {
+      "category": {
+        "type": "string"
+      }
+    }
+  },
+  "_links": {
+    "self": {
+      "relation": "Access to describe resource",
+      "href": "http://localhost:4000/api/v1/describe",
+      "type": "application/json",
+      "method": "GET"
+    },
+    "execution": {
+      "relation": "Processing resource",
+      "href": "http://localhost:4000/api/v1/process",
+      "type": "Complex type, see output in describe content for more information",
+      "method": "POST"
+    },
+    "config": {
+      "relation": "Processing configuration",
+      "href": "http://localhost:4000/api/v1/config",
+      "type": "application/json",
+      "method": "GET"
+    },
+    "version": {
+      "relation": "Processing version",
+      "href": "http://localhost:4000/api/v1/version",
+      "type": "application/json",
+      "method": "GET"
+    },
+    "health": {
+      "relation": "Processing health",
+      "href": "http://localhost:4000/api/v1/health",
+      "type": "text/plain",
+      "method": "GET"
+    }
+  }
+}

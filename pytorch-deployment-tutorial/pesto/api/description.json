@@ -1,0 +1,22 @@
+{
+  "title": "pytorch-deployment-tutorial",
+  "name": "pytorch-deployment-tutorial",
+  "version": "1.0.0.dev0",
+  "description": "My first deployment with pesto",
+  "family": "classification",
+  "template": "image-classification",
+  "keywords": [
+    "classification",
+    "resnet",
+    "imagenet"
+  ],
+  "resources": {
+    "cpu": 4,
+    "gpu": 0,
+    "ram": 8
+  },
+  "asynchronous": false,
+  "organization": "Computer Vision",
+  "email": "computervision@airbus.com",
+  "licence": "Property of Computer Vision, all rights reserved"
+}
