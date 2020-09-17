@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Processing Factory Demo</title>
+    <meta property="og:title" content="Processing Factory Demo" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://fchouteau.github.io/processing-factory-demo/featured-slide.jpg" />
+    <meta property="og:url" content="https://fchouteau.github.io/processing-factory-demo" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/solarized-dark.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template">
+
+# Processing Factory Demo
+
+</script></section><section data-markdown><script type="text/template">
+
+- https://github.com/fchouteau/processing-factory-demo/
+- Example mirroring [Deploying PyTorch in Python via a REST API with Flask](https://pytorch.org/tutorials/intermediate/flask_rest_api_tutorial.html)
+- Demo of building the pesto WS
+- Demo of using the pesto WS
+
+</script></section><section data-markdown><script type="text/template">
+
+https://github.com/AirbusDefenceAndSpace/pesto
+
+```bash
+git clone https://github.com/AirbusDefenceAndSpace/pesto
+cd pesto && pip install .
+```
+
+(on pypi.org soon)
+
+</script></section><section data-markdown><script type="text/template">
+
+Let's run pesto init
+
+![](static/imgs/pesto_init.png)
+
+This will generate a python package template
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/tree_1.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+here are the pesto build files
+
+![](static/imgs/tree_2.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+We want a CNN that classifies image based on ImageNet.
+
+Pesto wants a `algorithm.process.Process` class with a `process` method
+
+The code looks like this...
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/code_1.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/code_2.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/code_3.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+Let's define our API:
+
+- INPUT: An image
+- OUTPUT: A json with the category as a string
+
+</script></section><section data-markdown><script type="text/template">
+
+`pesto/api/input_schema.json`
+
+![](static/imgs/input.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+`pesto/api/output_schema.json`
+
+![](static/imgs/output.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+add a description
+
+```json
+{
+  "title": "pytorch-deployment-tutorial",
+  "name": "pytorch-deployment-tutorial",
+  "version": "1.0.0.dev0",
+  "description": "My first deployment with pesto",
+  "family": "classification",
+  "template": "image-classification",
+  "keywords": [
+    "classification",
+    "resnet",
+    "imagenet"
+  ],
+  "resources": {
+    "cpu": 4,
+    "gpu": 0,
+    "ram": 8
+  },
+  "asynchronous": false,
+  "organization": "Computer Vision",
+  "email": "computervision@airbus.com",
+  "licence": "Property of Computer Vision, all rights reserved"
+}
+```
+
+</script></section><section data-markdown><script type="text/template">
+
+But what about our dependencies ?
+
+let's look at requirements.json <!-- .element: class="fragment" data-fragment-index="1" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/requirements.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+For custom depencies you can...
+
+- use a custom docker images (custom deps, compiled code etc...) <!-- .element: class="fragment" data-fragment-index="1" -->
+- specify .tar.gz archives for static files & python dependencies <!-- .element: class="fragment" data-fragment-index="2" -->
+- specify requirements.txt for your package for pip dependencies <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script></section><section data-markdown><script type="text/template">
+
+Now... let's build with `pesto build .`
+
+This will parse the pesto folder and generate a folder with everything correctly placed + a dockerfile
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/build.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/build_2.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/docker_2.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+Et voilà !
+
+![](static/imgs/docker_1.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+Now... how do we use it ?
+
+`docker run --rm -p 4000:8080 pytorch-deployment-tutorial:1.0.0.dev0`
+
+Example request ...
+
+`curl -X GET http://localhost:8080/api/v1/describe`
+
+</script></section><section data-markdown><script type="text/template">
+
+But for a processing ? Using `requests` in python... or use the `pesto` API helpers
+
+</script></section><section data-markdown><script type="text/template">
+
+![](static/imgs/pesto_python.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+And why not build a frontend to use it ?
+
+https://www.streamlit.io/
+
+</script></section><section data-markdown><script type="text/template">
+
+<video data-autoplay src="static/streamlit.mp4"></video>
+
+</script></section><section data-markdown><script type="text/template">
+
+Now that your service is tested... you can pass it to production, deploy it on a K8s cluster...
+
+</script></section><section data-markdown><script type="text/template">
+
+The end !</script></section></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"fade","transitionSpeed":"default","controls":false}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
